@@ -70,7 +70,7 @@ const getUsers = async (req, res) => {
 };
 const getUser = async (req, res) => {
   const user_id = req.user;
-  console.log("sad",user_id)
+  console.log("sad", user_id)
   try {
     const result = await User.getUser(user_id);
     console.log(result);
@@ -172,7 +172,7 @@ const updatePassword = async (req, res) => {
 };
 
 const updatePasswordmailer = async (req, res) => {
-  const {  password } = req.body;
+  const { password } = req.body;
   // console.log(email, password);
 
   try {
@@ -192,7 +192,7 @@ const updatePasswordmailer = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const result = await User.updatePasswordd( hashedPassword);
+    const result = await User.updatePasswordd(hashedPassword);
 
     return res.status(200).json(result.rows);
   } catch (error) {
@@ -201,9 +201,9 @@ const updatePasswordmailer = async (req, res) => {
   }
 };
 const decode = (req, res) => {
-  const { token } = req.body;
+  const { Token } = req.body;
   try {
-    const result = User.decodeToken(token, key);
+    const result = User.decodeToken(Token, key);
     return res.status(200).json(result);
   } catch (error) {
     throw error;

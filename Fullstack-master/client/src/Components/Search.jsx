@@ -1,11 +1,14 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
-function Search({ product, filterProduct, filterSubProducts, filterProductNames }) {
+function Search({ cursorStyle, handleMouseUp, handleMouseDown, product, filterProduct, filterSubProducts, filterProductNames }) {
+
     const [category, setgategory] = useState([])
     console.log(category)
     const [subcategory, setsubtegory] = useState([])
     console.log(subcategory)
+    console.log(cursorStyle)
+
     const getcategory = async () => {
         const response = await axios.get('http://localhost:8000/Categorys')
         const responses = await axios.get('http://localhost:8000/subCategorys')
@@ -42,6 +45,8 @@ function Search({ product, filterProduct, filterSubProducts, filterProductNames 
     const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
     };
+
+
     return (
         <div className="flex gap-4 m-2 max-w-lg mx-auto">
 
@@ -52,7 +57,7 @@ function Search({ product, filterProduct, filterSubProducts, filterProductNames 
                 >
 
 
-                    <select
+                    <select onMouseOver={handleMouseDown} onMouseLeave={handleMouseUp} style={{ cursor: cursorStyle }}
                         onChange={handleCategoryChange}
                         className="flex w-full flex-col rounded-lg py-2 bg-[#C08261] text-md text-red-900 dark:text-gray-200"
                         aria-labelledby="dropdown-button"
@@ -77,6 +82,7 @@ function Search({ product, filterProduct, filterSubProducts, filterProductNames 
                     className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 "
                 >
                     <select
+                        onMouseOver={handleMouseDown} onMouseLeave={handleMouseUp} style={{ cursor: cursorStyle }}
                         onChange={handleSubCategoryChange}
                         className="flex w-full flex-col rounded-lg py-2 bg-[#C08261] text-md text-red-900 dark:text-gray-200"
                         aria-labelledby="dropdown-button"
@@ -98,6 +104,7 @@ function Search({ product, filterProduct, filterSubProducts, filterProductNames 
                     className="z-10 bg-white  divide-y divide-gray-100 rounded-lg shadow w-44 "
                 >
                     <select
+                        onMouseOver={handleMouseDown} onMouseLeave={handleMouseUp} style={{ cursor: cursorStyle }}
                         onChange={handleNameCategoryChange}
                         className="flex w-full flex-col rounded-lg py-2 bg-[#C08261] text-md text-red-900 dark:text-gray-200"
                         aria-labelledby="dropdown-button"

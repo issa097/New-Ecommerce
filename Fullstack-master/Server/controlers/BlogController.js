@@ -49,6 +49,7 @@ const getBlogpagi = async (req, res) => {
 
 const getBlog = async (req, res) => {
   const blog_id = req.params.blog_id;
+  console.log(blog_id)
   try {
     const result = await blog.getBlog(blog_id);
     return res.status(200).json(result.rows);

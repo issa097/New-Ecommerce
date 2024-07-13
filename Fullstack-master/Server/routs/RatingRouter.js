@@ -43,5 +43,7 @@ router.get(
 
 router.put("/SoftDeletes/:rating_id", RatingController.SoftDeletes);
 router.put("/updates/:rating_id", RatingController.updateS);
+// router.put("/updateSreplay/:rating_id", authentication.authenticateToken,
+//   RatingController.updateSreplay);
 
 module.exports = router;

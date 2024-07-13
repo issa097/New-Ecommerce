@@ -1,6 +1,6 @@
 const db = require("../lib/db");
 const jwt = require("jsonwebtoken");
-const key = "issa";
+const key = process.env.KEY
 const bcrypt = require("bcrypt");
 
 function getAllUsers() {
@@ -176,14 +176,10 @@ function updatedImage(
   return db.query(queryText, values);
 }
 
-function decodeToken(token, key) {
+function decodeToken(Token, key) {
   let userData = {};
-  jwt.verify(token, key, (err, decoded) => {
-    // console.log("token");
-    // console.log(token);
-    // console.log(key);
-    // console.log(decoded);
-    // console.log("decoded");
+  jwt.verify(Token, key, (err, decoded) => {
+
     userData = decoded;
     return decoded;
   });

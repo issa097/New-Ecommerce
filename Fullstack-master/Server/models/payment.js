@@ -13,7 +13,7 @@ function getAllpaymentspagi(limit, offset) {
     WHERE is_deleted = false
     LIMIT $1 OFFSET $2
   `;
-  console.log("I am here ",limit,offset)
+  console.log("I am here ", limit, offset)
   return db.query(query, [limit, offset]);
 }
 

@@ -120,6 +120,12 @@ const updateS = async (req, res) => {
     throw error;
   }
 };
+
+
+
+
+
+
 module.exports = {
   addRating,
   getAllRating,

@@ -17,6 +17,7 @@ const CouponRouter = require("./routs/CouponRouter");
 const FaqRouter = require("./routs/FaqRouter");
 const GoogleRoutes = require("./routs/GoogleRoutes");
 const Orders = require("./routs/OrderRouter");
+const Replay = require('./routs/ReplayRouter')
 
 // const nodemailer = require("nodemailer");
 const session = require("express-session");
@@ -56,6 +57,7 @@ app.use(CouponRouter);
 app.use(FaqRouter);
 app.use(GoogleRoutes);
 app.use(Orders)
+app.use(Replay)
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 

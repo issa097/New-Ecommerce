@@ -30,7 +30,7 @@ function getAllblogsspagi(limit, offset) {
 
 function getBlog(blog_id) {
   const queryText =
-    "SELECT * FROM Blog WHERE blog_id = $1 AND is_deleted = false";
+    "SELECT * FROM blog WHERE blog_id = $1 AND is_deleted = false";
   const value = [blog_id];
   return db.query(queryText, value);
 }

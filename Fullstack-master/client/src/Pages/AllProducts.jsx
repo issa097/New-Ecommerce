@@ -5,6 +5,7 @@ import Card from "../Components/Card";
 import Nav from "../Components/Nav";
 import Footer from "../Components/Footer";
 import Search from "../Components/Search";
+import PaginationComponent from "../Components/CustomPagination";
 
 function AllProducts() {
   const [product, setProduct] = useState([]);
@@ -15,7 +16,10 @@ function AllProducts() {
   console.log(searchInput)
   const [loading, setLoading] = useState(false);
   const [sortOption, setSortOption] = useState("default");
-
+  const [cursorStyle, setCursorStyle] = useState('default');
+  const [currentPage, setCurrentPage] = useState(0);
+  const [itemsPerPage] = useState(8);
+  console.log(cursorStyle)
   const productss = async () => {
     setLoading(true);
 
@@ -87,8 +91,10 @@ function AllProducts() {
     e.preventDefault();
   };
 
-
-  const sortedProducts = filterProductName;
+  const filteredItems = filterProductName.filter((item) =>
+    item.product_name.toLowerCase().includes(searchInput.toLowerCase())
+  );
+  const sortedProducts = [...filteredItems];
   if (sortOption === "priceLowToHigh") {
     sortedProducts.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
   } else if (sortOption === "priceHighToLow") {
@@ -96,11 +102,28 @@ function AllProducts() {
   } else if (sortOption === "topRated") {
     sortedProducts.sort((a, b) => b.rating - a.rating);
   }
+  const handleMouseDown = () => {
+    setCursorStyle('pointer'); // يمكنك تغيير الشكل هنا إلى الشكل الذي تريده
+  };
+  const handleMouseDowns = () => {
+    setCursorStyle('help'); // يمكنك تغيير الشكل هنا إلى الشكل الذي تريده
+  };
+  const handleMouseUp = () => {
+    setCursorStyle("default"); // يمكنك تغيير الشكل هنا إلى الشكل الذي تريده
+  };
+
+  const displayedData = sortedProducts.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+  console.log(displayedData)
+
+  const handlePageChange = (selectedItem) => {
+    console.log(selectedItem)
+    setCurrentPage(selectedItem.selected);
+  };
   return (
     <>
       <Nav />
-      <div className="lg:mx-32">
-        <form className="mt-8" onSubmit={handleSearchSubmit}>
+      <div className="lg:mx-32"  >
+        <form className="mt-8"  >
           <label
             htmlFor="default-search"
             className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -108,7 +131,8 @@ function AllProducts() {
             Search
           </label>
           <div className="relative">
-            <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+            <div
+              className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
               <svg
                 className="w-4 h-4 text-gray-500 dark:text-gray-400"
                 aria-hidden="true"
@@ -134,12 +158,7 @@ function AllProducts() {
               onChange={handleSearchChange}
               required
             />
-            <button
-              type="submit"
-              className="text-white absolute end-2.5 bottom-2.5 bg-[#C08261] hover:bg-[#E2C799] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              Search
-            </button>
+
           </div>
         </form>
 
@@ -165,13 +184,16 @@ function AllProducts() {
                     filterProduct={filterProduct}
                     filterSubProducts={filterSubProducts}
                     filterProductNames={filterProductNames}
+                    handleMouseDown={handleMouseDown}
+                    handleMouseUp={handleMouseUp}
+                    cursorStyle={cursorStyle}
                   />
                 </div>
               </div>
 
               <div className="flex justify-center items-center">
                 <label className="block text-md font-medium text-gray-700   ">
-                  <select
+                  <select onMouseOver={handleMouseDown} onMouseLeave={handleMouseUp} style={{ cursor: cursorStyle }}
                     value={sortOption}
                     onChange={(e) => handleSortChange(e.target.value)}
                     className=" w-full flex-col rounded-lg py-2 bg-[#C08261] text-md text-red-900 dark:text-gray-200 "
@@ -185,8 +207,8 @@ function AllProducts() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8">
-              {sortedProducts.map((product) => (
+            <div onMouseOver={handleMouseDowns} onMouseLeave={handleMouseUp} style={{ cursor: cursorStyle }} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8">
+              {displayedData.map((product) => (
                 <Card
                   key={product.product_id}
                   id={product.product_id}
@@ -197,10 +219,16 @@ function AllProducts() {
                   rating={product.product_rating}
 
                 />
+
               ))}
+
             </div>
 
-            <Pagination />
+            < PaginationComponent
+              pageCount={Math.ceil(sortedProducts.length / itemsPerPage)}
+              onPageChange={handlePageChange}
+
+            />
           </>
         )}
       </div>

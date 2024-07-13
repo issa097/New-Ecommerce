@@ -582,8 +582,6 @@ const PaymentForm = () => {
     }
   };
   const applyCoupon = async (e) => {
-    e.preventDefault();
-
     try {
       const response = await axios.post("http://localhost:8000/applyCoupons", {
         code: couponCode,
@@ -593,7 +591,7 @@ const PaymentForm = () => {
       setdiscountedTotal(response.data.discountedTotal);
 
       setAppliedCoupon(response.data.coupon.rows[0].discount_percentage);
-      console.log("😒😒😒", response.data);
+      console.log("😒😒😒", response.data.coupon.rows[0]);
       showAlert("Coupon successful!", "success");
 
       setCouponError(null);
@@ -765,6 +763,7 @@ const PaymentForm = () => {
               </div>
 
               <p className="mt-4">Total Price: ${totalPrice}</p>
+              <p className="mt-4">Total Price: ${discountedTotal}</p>
 
               <label
                 htmlFor="card-details"

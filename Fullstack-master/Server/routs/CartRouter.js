@@ -12,12 +12,12 @@ router.get(
 );
 router.put(
   "/updateCart/:cart_id",
-  
+
   cartController.updateCart
 );
 router.put(
   "/updateCart2/:product_id",
-  
+
   cartController.updateCart2
 );
 

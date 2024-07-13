@@ -66,7 +66,8 @@ function getRatingByproduct(product_id) {
   ratings.comment,
   ratings.created_at,
   ratings.is_deleted AS rating_is_deleted,
-  users.username
+  users.username,
+  users.user_img
 FROM ratings
 JOIN users ON ratings.user_id = users.user_id
 WHERE ratings.product_id = $1 AND ratings.is_deleted = false;
@@ -86,8 +87,7 @@ function updateS(
   product_id,
   rating,
   comment,
-  created_at,
-  is_deleted
+
 ) {
   const queryText = `
     UPDATE ratings 
@@ -95,9 +95,8 @@ function updateS(
       user_id = COALESCE($2, user_id),
       product_id = COALESCE($3, product_id),
       rating = COALESCE($4, rating),
-      comment = COALESCE($5, comment),
-      created_at = COALESCE($6, created_at),
-      is_deleted = COALESCE($7, is_deleted)
+      comment = COALESCE($5, comment)
+     
     WHERE 
     rating_id = $1 
     RETURNING *`;
@@ -108,12 +107,12 @@ function updateS(
     product_id,
     rating,
     comment,
-    created_at,
-    is_deleted,
+
   ];
 
   return db.query(queryText, values);
 }
+
 
 function SoftDeletes(rating_id) {
   const queryText =
@@ -130,4 +129,5 @@ module.exports = {
   getRatingByproduct,
   SoftDeletes,
   updateS,
+
 };

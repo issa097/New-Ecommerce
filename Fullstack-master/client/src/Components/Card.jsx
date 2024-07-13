@@ -6,6 +6,7 @@ import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert";
 import Cookies from "js-cookie";
 import StarRating from "./StarRating";
+import PaginationComponent from "./CustomPagination";
 
 function Card({ id, product_name, category_name, price, image, rating }) {
   const [quantity, setQuantity] = useState(1);
@@ -78,9 +79,12 @@ function Card({ id, product_name, category_name, price, image, rating }) {
               <FontAwesomeIcon icon={faShoppingCart} />
             </button>
           </div>
+
         </div>
       </div>
+
     </div >
+
   );
 }
 

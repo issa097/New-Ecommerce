@@ -65,7 +65,7 @@ const App = () => {
           <Route path="/admin" element={<YourComponent />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/allblogs" element={<AllBlogs />} />
-          <Route path="/blogsdetails/:id" element={<BlogsDetails />} />
+          <Route path="/blogsdetails/:blog_id" element={<BlogsDetails />} />
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/rest" element={<Reset />} />
           <Route path="/otp" element={<Otp />} />
